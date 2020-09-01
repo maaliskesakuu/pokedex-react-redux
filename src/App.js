@@ -1,9 +1,9 @@
-import React from "react"
-import Loader from "react-loader-spinner"
-import NavigationBar from "./Components/Layout/NavigationBar"
-import ListPage from "./Components/Pokemon/ListPage"
-import DetailPage from "./Components/Pokemon/DetailPage"
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import React from "react";
+import Loader from "react-loader-spinner";
+import NavigationBar from "./Components/Layout/NavigationBar";
+import ListPage from "./Components/Pokemon/ListPage";
+import DetailPage from "./Components/Pokemon/DetailPage";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 class App extends React.Component {
     constructor(props) {
@@ -26,8 +26,8 @@ class App extends React.Component {
                             <Route
                                 exact
                                 path="/"
-								render={() => 
-									this.state.loading ? (
+                                render={() =>
+                                    this.state.loading ? (
                                         <Loader
                                             type="Puff"
                                             color="#00BFFF"
@@ -39,7 +39,11 @@ class App extends React.Component {
                                     )
                                 }
                             ></Route>
-                            <Route exact path="/details/:id" component={DetailPage}></Route>
+                            <Route
+                                exact
+                                path="/details/:id"
+                                component={DetailPage}
+                            ></Route>
                         </Switch>
                     </div>
                 </Router>

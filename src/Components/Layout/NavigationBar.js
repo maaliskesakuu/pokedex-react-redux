@@ -1,8 +1,8 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import SearchBar from './SearchBar'
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import SearchBar from "./SearchBar";
 
-class NavigationBar extends React.Component {
+class NavigationBar extends Component {
     render() {
         return (
             <nav>
@@ -10,7 +10,7 @@ class NavigationBar extends React.Component {
                     <ul className="left">
                         <Link to="/">Home</Link>
                     </ul>
-                    <SearchBar/>
+                    <SearchBar />
                 </div>
             </nav>
         )

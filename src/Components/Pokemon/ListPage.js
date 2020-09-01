@@ -1,6 +1,6 @@
-import React from 'react'
-import Card from './Card'
-import Pagination from '../Layout/Pagination'
+import React, { Component } from 'react';
+import Card from './Card';
+import Pagination from '../Layout/Pagination';
 
 class ListPage extends React.Component {
     constructor(props) {

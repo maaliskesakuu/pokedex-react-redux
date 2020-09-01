@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { Component } from 'react';
 
-class Pagination extends React.Component {
+class Pagination extends Component {
     render() {
         return (
             <div className="container">
