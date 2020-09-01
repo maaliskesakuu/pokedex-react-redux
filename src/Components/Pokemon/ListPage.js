@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Card from './Card';
 import Pagination from '../Layout/Pagination';
 
-class ListPage extends React.Component {
+class ListPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
