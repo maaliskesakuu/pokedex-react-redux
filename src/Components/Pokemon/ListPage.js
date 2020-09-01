@@ -1,30 +1,49 @@
-import React, { Component } from 'react';
-import Card from './Card';
-import Pagination from '../Layout/Pagination';
+import React, { Component } from "react"
+import Card from "./Card"
+import Pagination from "../Layout/Pagination"
+import { connect } from "react-redux"
+
+// import { getPokemons } from "../../store/actions/getPokemonActions"
 
 class ListPage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: null
-        };
+    state = {
+        pokemons: null,
     }
-    componentDidMount() {
-        fetch('https://pokeapi.co/api/v2/pokemon/?limit=20')
-            .then(resp => resp.json())
-            .then(data => this.setState({ data }))
-            .catch(err => console.log(err))
-    }
+
+    // componentDidMount() {
+    //     fetch("https://pokeapi.co/api/v2/pokemon/?limit=20")
+    //         .then((resp) => resp.json())
+    //         .then((data) => this.setState({ data }))
+    //         .catch((err) => console.log(err))
+    // }
+
+    // render() {
+    //     return (
+    //         <div>
+    //             <div className="row">
+    //                 {this.state.data
+    //                     ? this.state.data.results.map((pokemon, index) => (
+    //                           <Card pokemon={pokemon} key={index} />
+    //                       ))
+    //                     : "Loading..."}
+    //             </div>
+    //             <div className="row">
+    //                 <Pagination></Pagination>
+    //             </div>
+    //         </div>
+    //     )
+    // }
 
     render() {
         return (
             <div>
                 <div className="row">
-                    {
-                        this.state.data ?
-                        this.state.data.results.map((pokemon, index) => <Card pokemon={pokemon} key={index} />) :
-                        'Loading...'
-                    }
+                    {console.log(this.props.pokemons)}
+                    {this.props.pokemons
+                        ? this.props.pokemons.map((pokemon, index) => (
+                              <Card pokemon={pokemon} key={index} />
+                          ))
+                        : "Loading..."}
                 </div>
                 <div className="row">
                     <Pagination></Pagination>
@@ -34,4 +53,16 @@ class ListPage extends Component {
     }
 }
 
-export default ListPage;
+const mapStateToProps = (state) => {
+    return {
+        pokemons: state.pokemons,
+    }
+}
+
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         getPokemon: () => dispatch(getPokemons()),
+//     }
+// }
+
+export default connect(mapStateToProps)(ListPage)
