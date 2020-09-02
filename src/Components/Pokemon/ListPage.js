@@ -3,47 +3,32 @@ import Card from "./Card"
 import Pagination from "../Layout/Pagination"
 import { connect } from "react-redux"
 
-import { getPokemons } from "../../store/actions/getPokemonActions"
+import { getPokemons } from "../../store/actions/pokemonActions"
 
 class ListPage extends Component {
-    // state = {
-    //     pokemons: null,
-    // }
-
-    // componentDidMount() {
-    //     fetch("https://pokeapi.co/api/v2/pokemon/?limit=20")
-    //         .then((resp) => resp.json())
-    //         .then((data) => this.setState({ data }))
-    //         .catch((err) => console.log(err))
-    // }
-
-    // render() {
-    //     return (
-    //         <div>
-    //             <div className="row">
-    //                 {this.state.data
-    //                     ? this.state.data.results.map((pokemon, index) => (
-    //                           <Card pokemon={pokemon} key={index} />
-    //                       ))
-    //                     : "Loading..."}
-    //             </div>
-    //             <div className="row">
-    //                 <Pagination></Pagination>
-    //             </div>
-    //         </div>
-    //     )
-    // }
+    componentDidMount() {
+        this.props.dispatch(getPokemons())
+    }
 
     render() {
+        const { error, loading, products } = this.props
+
+        if (error) {
+            return <div>Error! {error.message}</div>
+        }
+
+        if (loading) {
+            return <div>Loading...</div>
+        }
+
         return (
             <div>
                 <div className="row">
-                    {console.log(this.props.pokemons)}
-                    {this.props.pokemons
-                        ? this.props.pokemons.map((pokemon, index) => (
-                              <Card pokemon={pokemon} key={index} />
-                          ))
-                        : "Loading..."}
+                    <ul>
+                        {products.map((product, index) => (
+                            <Card pokemon={product} key={index} />
+                        ))}
+                    </ul>
                 </div>
                 <div className="row">
                     <Pagination></Pagination>
@@ -55,14 +40,10 @@ class ListPage extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        pokemons: state.pokemons,
+        products: state.products.items,
+        loading: state.products.loading,
+        error: state.products.error,
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        getPokemon: (pokemon) => dispatch(getPokemons(pokemon)),
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ListPage)
+export default connect(mapStateToProps)(ListPage)
