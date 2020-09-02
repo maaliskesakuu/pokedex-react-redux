@@ -2,22 +2,22 @@
 import React, { Component } from "react";
 
 class DetailPage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
+ constructor(props) {
+       super(props);
+       this.state = {};
+   }
 
-    componentDidMount() {
-        const { id } = this.props.match.params;
-        const detailUrl = `https://pokeapi.co/api/v2/pokemon/${id}`;
-        fetch(detailUrl)
-            .then((resp) => {
-                if (!resp.ok) throw new Error("Not 2xx response")
-                else return resp.json()
-            })
-            .then((data) => this.setState({ data }))
-            .catch((err) => console.log(err))
-    }
+   componentDidMount() {
+       const { id } = this.props.match.params;
+       const detailUrl = `https://pokeapi.co/api/v2/pokemon/${id}`;
+       fetch(detailUrl)
+           .then((resp) => {
+               if (!resp.ok) throw new Error("Not 2xx response")
+               else return resp.json()
+           })
+           .then((data) => this.setState({ data }))
+           .catch((err) => console.log(err))
+   }
 
     render() {
         return (

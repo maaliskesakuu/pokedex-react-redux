@@ -1,22 +1,22 @@
 const initialState = {
     pokemons: [
         {
-            name: "Pikachu",
+            name: "Butterfree",
         url: "https://pokeapi.co/api/v2/pokemon-form/12/",
             id:1
         },
         {
-            name: "Squirtle",
+            name: "Weedle",
           url: "https://pokeapi.co/api/v2/pokemon-form/13/",
           id:2
         },
         {
-            name: "Charmander",
+            name: "Kakuna",
             url: "https://pokeapi.co/api/v2/pokemon-form/14/",
             id:3
         },
         {
-            name: "Metapod",
+            name: "Pidgey",
             url: "https://pokeapi.co/api/v2/pokemon-form/16/",
             id:4
         },

@@ -3,12 +3,12 @@ import Card from "./Card"
 import Pagination from "../Layout/Pagination"
 import { connect } from "react-redux"
 
-// import { getPokemons } from "../../store/actions/getPokemonActions"
+import { getPokemons } from "../../store/actions/getPokemonActions"
 
 class ListPage extends Component {
-    state = {
-        pokemons: null,
-    }
+    // state = {
+    //     pokemons: null,
+    // }
 
     // componentDidMount() {
     //     fetch("https://pokeapi.co/api/v2/pokemon/?limit=20")
@@ -59,10 +59,10 @@ const mapStateToProps = (state) => {
     }
 }
 
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         getPokemon: () => dispatch(getPokemons()),
-//     }
-// }
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getPokemon: (pokemon) => dispatch(getPokemons(pokemon)),
+    }
+}
 
-export default connect(mapStateToProps)(ListPage)
+export default connect(mapStateToProps, mapDispatchToProps)(ListPage)
