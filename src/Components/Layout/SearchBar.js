@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import React, { Component } from "react"
+import { Redirect } from "react-router-dom"
 
 class SearchBar extends Component {
     constructor(props) {
         super(props)
-        this.state = {};
+        this.state = {}
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmission = this.handleSubmission.bind(this);
+        this.handleChange = this.handleChange.bind(this)
+        this.handleSubmission = this.handleSubmission.bind(this)
     }
 
     handleChange(e) {
@@ -17,10 +17,10 @@ class SearchBar extends Component {
     }
 
     handleSubmission(e) {
-        e.preventDefault();
+        e.preventDefault()
         this.setState({
             redirect: true,
-        });
+        })
     }
 
     render() {

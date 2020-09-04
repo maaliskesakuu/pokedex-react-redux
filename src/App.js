@@ -1,5 +1,5 @@
 import React from "react";
-import Loader from "react-loader-spinner";
+// import Loader from "react-loader-spinner";
 import NavigationBar from "./Components/Layout/NavigationBar";
 import ListPage from "./Components/Pokemon/ListPage";
 import DetailPage from "./Components/Pokemon/DetailPage";
@@ -23,7 +23,7 @@ class App extends React.Component {
                     <NavigationBar></NavigationBar>
                     <div className="container">
                         <Switch>
-                            <Route
+                            {/* <Route
                                 exact
                                 path="/"
                                 render={() =>
@@ -38,6 +38,13 @@ class App extends React.Component {
                                         <ListPage></ListPage>
                                     )
                                 }
+                            ></Route> */}
+                                 <Route
+                                exact
+                                path="/"
+                            
+                                component={ListPage}
+                            
                             ></Route>
                             <Route
                                 exact
