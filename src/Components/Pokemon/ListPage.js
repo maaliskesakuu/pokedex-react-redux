@@ -18,7 +18,11 @@ class ListPage extends Component {
         }
 
         if (loading) {
-            return <div className="container"><p>Loading...</p></div>
+            return (
+                <div className="container">
+                    <h2>Loading...</h2>
+                </div>
+            )
         }
 
         return (

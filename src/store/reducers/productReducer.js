@@ -2,13 +2,16 @@ import {
     GET_POKEMONS_BEGIN,
     GET_POKEMONS_SUCCESS,
     GET_POKEMONS_FAILURE,
-    // FILTER_BY_NAME
+    GET_POKEMONS_NEXT
 } from "../actions/pokemonActions"
 
 const initialState = {
     items: [],
     loading: false,
     error: null,
+    // totalResuls: 0,
+    currentPage: 1,
+    // productsPerPage: 20
 }
 
 export default function productReducer(state = initialState, action) {
@@ -32,26 +35,11 @@ export default function productReducer(state = initialState, action) {
                 error: action.payload.error,
                 items: [],
             }
-            //  case FILTER_BY_NAME:
-            //      //filter by name
-            //     let newState = Object.assign({}, state)
-            //     let value = action.payload.value;
-            //     let filteredValues = state.products.filter(product => {
-            //         return product.name.toLowerCase().includes(value)
-            //     })
-            // let appliedFilters = state.appliedFilters
-            // if (value) {
-            //     let index = appliedFilters.indexOf(FILTER_BY_NAME)
-            //     if (index === -1) appliedFilters.push(FILTER_BY_NAME)
-            //     newState.filteredProducts = filteredValues
-            // } else {
-            //     let index = appliedFilters.indexOf(FILTER_BY_NAME)
-            //     appliedFilters.splice(index, 1)
-            //     if (appliedFilters.length === 0) {
-            //         newState.filteredProducts = newState.products
-            //     }
-            // }
-        //     return newState;
+        case GET_POKEMONS_NEXT:
+            return {
+                ...state,
+                items: action.payload.products
+            }
         default:
             return state
     }

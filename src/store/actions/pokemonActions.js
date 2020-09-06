@@ -10,6 +10,27 @@ export function getPokemons() {
         return getPokemonAPI()
             .then((json) => {
                 console.log(json)
+                console.log(json.count)
+                console.log(json.next)
+                dispatch(getPokemonsSuccess(json.results))
+                return json.results
+            })
+            .catch((error) => dispatch(getPokemonsFailure(error)))
+    }
+}
+
+function nextPage() {
+    return fetch("https://pokeapi.co/api/v2/pokemon/?limit=20&offset=20")
+        .then(handleErrors)
+        .then((res) => res.json())
+}
+
+export function getPokemonsNext() {
+    return (dispatch) => {
+        dispatch(getPokemonsBegin())
+        return nextPage()
+            .then((json) => {
+                console.log(json)
                 dispatch(getPokemonsSuccess(json.results))
                 return json.results
             })
@@ -29,6 +50,8 @@ export const GET_POKEMONS_BEGIN = "GET_POKEMONS_BEGIN"
 export const GET_POKEMONS_SUCCESS = "GET_POKEMONS_SUCCESS"
 
 export const GET_POKEMONS_FAILURE = "GET_POKEMONS_FAILURE"
+
+export const GET_POKEMONS_NEXT = "GET_POKEMONS_NEXT"
 
 // export const LOAD_NEW_PAGE = "LOAD_NEW_PAGE"
 
@@ -63,4 +86,9 @@ export const getPokemonsSuccess = (products) => ({
 export const getPokemonsFailure = (error) => ({
     type: GET_POKEMONS_FAILURE,
     payload: { error },
+})
+
+export const getPokemonsNextPage = (products) => ({
+    type: GET_POKEMONS_NEXT,
+    payload: { products },
 })
