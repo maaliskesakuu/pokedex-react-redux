@@ -1,94 +1,90 @@
-function getPokemonAPI() {
-    return fetch("https://pokeapi.co/api/v2/pokemon/?limit=20&offset=0")
-        .then(handleErrors)
-        .then((res) => res.json())
-}
+export const GET_POKEMONS_BEGIN = "GET_POKEMONS_BEGIN"
 
-export function getPokemons() {
-    return (dispatch) => {
-        dispatch(getPokemonsBegin())
-        return getPokemonAPI()
-            .then((json) => {
-                console.log(json)
-                console.log(json.count)
-                console.log(json.next)
-                dispatch(getPokemonsSuccess(json.results))
-                return json.results
-            })
-            .catch((error) => dispatch(getPokemonsFailure(error)))
-    }
-}
+export const INITIAL_API_CALL = "INITIAL_API_CALL"
 
-function nextPage() {
-    return fetch("https://pokeapi.co/api/v2/pokemon/?limit=20&offset=20")
-        .then(handleErrors)
-        .then((res) => res.json())
-}
+export const GET_POKEMONS_FAILURE = "GET_POKEMONS_FAILURE"
 
-export function getPokemonsNext() {
-    return (dispatch) => {
-        dispatch(getPokemonsBegin())
-        return nextPage()
-            .then((json) => {
-                console.log(json)
-                dispatch(getPokemonsSuccess(json.results))
-                return json.results
-            })
-            .catch((error) => dispatch(getPokemonsFailure(error)))
-    }
-}
+export const POKEMON_LIST_UPDATED = "POKEMON_LIST_UPDATED"
 
-function handleErrors(response) {
+export const FOUND_POKEMON = "FOUND_POKEMON"
+
+const getPokemonsBegin = () => ({
+    type: GET_POKEMONS_BEGIN,
+})
+
+const initialPokemons = (data) => ({
+    type: INITIAL_API_CALL,
+    data: data,
+})
+
+const getPokemonsFailure = (error) => ({
+    type: GET_POKEMONS_FAILURE,
+    payload: { error },
+})
+
+const getMorePokemons = (data) => ({
+    type: POKEMON_LIST_UPDATED,
+    data: data,
+})
+
+const getOnePokemon = (data) => ({
+    type: FOUND_POKEMON,
+    data: data,
+})
+
+// to handle errors
+const handleErrors = (response) => {
     if (!response.ok) {
         throw Error(response.statusText)
     }
     return response
 }
 
-export const GET_POKEMONS_BEGIN = "GET_POKEMONS_BEGIN"
+export const initPokemon = (dispatch) => {
+    dispatch(getPokemonsBegin())
+    fetch("https://pokeapi.co/api/v2/pokemon/")
+        .then(handleErrors)
+        .then((resp) => resp.json())
+        .then((data) => {
+            dispatch(initialPokemons(data))
+        })
+        .catch((error) => dispatch(getPokemonsFailure(error)))
+}
 
-export const GET_POKEMONS_SUCCESS = "GET_POKEMONS_SUCCESS"
+export const getPokemons = (dispatch, index, specificUrl) => {
+    const params = "?limit=20&offset=" + (index - 1) * 20
+    const apiUrl = specificUrl
+        ? specificUrl
+        : "https://pokeapi.co/api/v2/pokemon/" + params
 
-export const GET_POKEMONS_FAILURE = "GET_POKEMONS_FAILURE"
+    dispatch(getPokemonsBegin())
+    fetch(apiUrl)
+        .then((resp) => resp.json())
+        .then((data) => {
+            dispatch(getMorePokemons(data))
+        })
+        .catch((error) => dispatch(getPokemonsFailure(error)))
+}
 
-export const GET_POKEMONS_NEXT = "GET_POKEMONS_NEXT"
+export const searchPokemon = (dispatch, queryParam) => {
+    const apiUrl = "https://pokeapi.co/api/v2/pokemon/" + queryParam
 
-// export const LOAD_NEW_PAGE = "LOAD_NEW_PAGE"
-
-// export const LOAD_EXACT_PAGE = "LOAD_EXACT_PAGE"
-
-// export const FILTER_BY_NAME = "FILTER_BY_NAME"
-
-// export const loadNewPage = (payload) => ({
-//     type: LOAD_NEW_PAGE,
-//     payload,
-// })
-
-// export const loadExactPage = (payload) => ({
-//     type: LOAD_EXACT_PAGE,
-//     payload,
-// })
-
-// export const filterByName = payload => ({
-//     type: FILTER_BY_NAME,
-//     payload
-// })
-
-export const getPokemonsBegin = () => ({
-    type: "GET_POKEMONS_BEGIN",
-})
-
-export const getPokemonsSuccess = (products) => ({
-    type: GET_POKEMONS_SUCCESS,
-    payload: { products },
-})
-
-export const getPokemonsFailure = (error) => ({
-    type: GET_POKEMONS_FAILURE,
-    payload: { error },
-})
-
-export const getPokemonsNextPage = (products) => ({
-    type: GET_POKEMONS_NEXT,
-    payload: { products },
-})
+    fetch(apiUrl)
+        .then((resp) => resp.json())
+        .then((data) => {
+            dispatch(getOnePokemon(data))
+            console.log(data)
+        })
+        .catch((err) => {
+            dispatch({
+                type: "SEARCH_POKEMON_FAILED",
+                err: err,
+            })
+        })
+       .catch((err) => {
+           dispatch({
+               type: "SEARCH_POKEMON_FAILED",
+               err: err,
+           })
+       })
+}

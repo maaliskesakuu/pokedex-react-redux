@@ -2,16 +2,15 @@ import React, { Component } from "react"
 import Card from "./Card"
 import Pagination from "../Layout/Pagination"
 import { connect } from "react-redux"
-
-import { getPokemons } from "../../store/actions/pokemonActions"
+import { initPokemon } from "../../store/actions/pokemonActions"
 
 class ListPage extends Component {
     componentDidMount() {
-        this.props.dispatch(getPokemons())
+        this.props.initPokemon()
     }
 
     render() {
-        const { error, loading, products } = this.props
+        const { error, loading, pokemons } = this.props
 
         if (error) {
             return <div>Error! {error.message}</div>
@@ -24,15 +23,12 @@ class ListPage extends Component {
                 </div>
             )
         }
-
         return (
             <div>
                 <div className="row">
-                    <ul>
-                        {products.map((product, index) => (
-                            <Card pokemon={product} key={index} />
-                        ))}
-                    </ul>
+                    {pokemons.map((pokemon, index) => (
+                        <Card pokemon={pokemon} key={index} />
+                    ))}
                 </div>
                 <div className="row">
                     <Pagination></Pagination>
@@ -44,10 +40,18 @@ class ListPage extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        products: state.products.items,
-        loading: state.products.loading,
-        error: state.products.error,
+        pokemons: state.pokemons,
+        loading: state.loading,
+        error: state.error,
     }
 }
 
-export default connect(mapStateToProps)(ListPage)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        initPokemon: () => {
+            initPokemon(dispatch)
+        },
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListPage)
