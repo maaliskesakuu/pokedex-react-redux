@@ -2,13 +2,8 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 
 class SearchBar extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {}
-        
-        this.handleChange = this.handleChange.bind(this)
-        this.handleSubmission = this.handleSubmission.bind(this)
-    }
+
+    state={}
 
     handleChange(e){
         this.setState({
@@ -25,10 +20,10 @@ class SearchBar extends React.Component {
 
     render() {
         return (
-            <form className="right" onSubmit={this.handleSubmission}>
+            <form className="right" onSubmit={this.handleSubmission.bind(this)}>
                 { this.state.redirect ? <Redirect to={'/details/' + this.state.search}/> : '' }
                 <div className="input-field">
-                    <input id="search" type="search" onChange={this.handleChange} required />
+                    <input id="search" type="search" onChange={this.handleChange.bind(this)} required />
                     <label className="label-icon" htmlFor="search">
                         <i className="material-icons">search</i>
                     </label>

@@ -6,12 +6,8 @@ import DetailPage from "./Components/Pokemon/DetailPage"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
 class App extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            loading: true,
-        }
-    }
+    state = { loading: true }
+
     componentDidMount() {
         setTimeout(() => this.setState({ loading: false }), 3000)
     }
@@ -26,8 +22,8 @@ class App extends React.Component {
                             <Route
                                 exact
                                 path="/"
-								render={() => 
-									this.state.loading ? (
+                                render={() =>
+                                    this.state.loading ? (
                                         <Loader
                                             type="Puff"
                                             color="#00BFFF"
@@ -39,7 +35,11 @@ class App extends React.Component {
                                     )
                                 }
                             ></Route>
-                            <Route exact path="/details/:id" component={DetailPage}></Route>
+                            <Route
+                                exact
+                                path="/details/:id"
+                                component={DetailPage}
+                            ></Route>
                         </Switch>
                     </div>
                 </Router>
